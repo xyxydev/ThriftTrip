@@ -1,0 +1,78 @@
+<div class="whole-container">
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="nav-container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="title" [ngClass]="isMobile ? 'mt-2 ms-3' : 'ms-3 mt-4 '">The Thrift Trip</p>
+                </div>
+                <div class="col-md-6 d-flex align-items-center justify-content-center" [ngClass]="{'adjustMargin': isMobile}">
+                    <div class="input-group search-bar" [ngClass]="{'ms-2': isMobile}">
+                        <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Search..."
+                        aria-label="Search"
+                        [(ngModel)]="searchQuery"
+                        />
+                        <button class="btn btn-outline-secondary" type="button">
+                        <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div class="ms-5 me-3">
+                        <!-- <i class="fas fa-heart heart-icon"></i> -->
+                        <div class="logo-img-container">
+                            <img class="logo-img" src="assets/images/others/logonew.jpg" alt="logo">
+                        </div>
+                    </div>
+                </div> 
+            </div> 
+        </div> 
+    </div>
+    <div [ngClass]="isMobile ? 'ms-3' : 'd-flex justify-content-center'">
+        <div class="second-nav-bar">
+            <div class="nav-list">
+                <ul class="d-flex align-items-center justify-content-center">
+                    <li (click)="setCategory('all')" [ngClass]="{'active': selectedCategory === 'all'}">All</li>
+                    <li (click)="setCategory('women')" [ngClass]="{'active': selectedCategory === 'women'}">For Her</li>
+                    <li (click)="setCategory('him')" [ngClass]="{'active': selectedCategory === 'him'}">For Him</li>
+                    <li (click)="setCategory('accessory')" [ngClass]="{'active': selectedCategory === 'accessory'}">Accessories</li>
+                    <li (click)="setCategory('other')" [ngClass]="{'active': selectedCategory === 'other'}">Others</li>
+                </ul>
+            </div>
+            <!-- Dropdown for Mobile View -->
+            <div class="dropdown-nav mb-1">
+                <div class="form-group">
+                    <label for="categoryFilter" class="form-label filter-text mt-2">Category</label>
+                    <select class="form-select selections" id="categoryFilter" [(ngModel)]="selectedCategory">
+                        <option value="all">All</option>
+                        <option value="women">For Her</option>
+                        <option value="him">For Him</option>
+                        <option value="accessory">Accessories</option>
+                        <option value="other">Others</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <div class="parent-container">
+            <div class="cards row">
+                <div class="col-md-3 image-div" *ngFor="let product of filteredProducts()">
+                    <div class="d-flex justify-content-center">
+                        <div class="img-container">
+                            <img [src]="product.src" [alt]="product.alt">
+                            <div class="row">
+                                <div class="col-6 avail-text">{{ product.size }}</div>
+                                <div class="col-6 avail-text d-flex justify-content-end">Stocks: {{ product.stocks }}</div>
+                            </div>
+                            <div class="details-card p-1 mt-1">
+                                <div class="product-title d-flex justify-content-center">{{ product.title }}</div>
+                                <div class="product-price d-flex justify-content-center ">{{ product.price }}</div>
+                            </div> 
+                        </div>
+                    </div> 
+                </div>  
+            </div>
+        </div>
+    </div>
+</div> 
