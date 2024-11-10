@@ -63,9 +63,9 @@
                             <img [src]="product.src" [alt]="product.alt">
                             <div class="row">
                                 <div class="col-6 avail-text">{{ product.size }}</div>
-                                <div class="col-6 avail-text d-flex justify-content-end">Stocks: {{ product.stocks }}</div>
+                                <div class="col-6 avail-text d-flex justify-content-end">{{ product.condition }}</div>
                             </div>
-                            <div class="details-card p-1 mt-1">
+                            <div class="details-card p-1 mt-1" (click)="openModal(product)">
                                 <div class="product-title d-flex justify-content-center">{{ product.title }}</div>
                                 <div class="product-price d-flex justify-content-center ">{{ product.price }}</div>
                             </div> 
@@ -76,3 +76,23 @@
         </div>
     </div>
 </div> 
+
+<!-- Modal Structure -->
+<div class="modal" tabindex="-1" [class.show]="isModalOpen" [style.display]="isModalOpen ? 'block' : 'none'">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title">{{ selectedProduct?.title }}: &nbsp;&nbsp;<span class="modal-price">{{ selectedProduct?.price }}</span></span>
+                <i class="fas fa-times close-icon" (click)="closeModal()"></i>
+            </div>
+            <div class="modal-body text-center">
+                <img [src]="selectedProduct?.src" [alt]="selectedProduct?.title" class="img-fluid">
+            </div>
+            <div class="d-flex justify-content-center align-items-center reserve-div">
+                <div class="text-center">
+                    <button class="reserve" (click)="reserveProduct()">RESERVE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

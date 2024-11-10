@@ -2,6 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { productImages } from '../products/products.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-home',
@@ -14,8 +15,21 @@ export class HomeComponent {
   selectedCategory: string = 'all';
   products = productImages;
   searchQuery: string = '';
+  isModalOpen = false;
+  selectedProduct: any = null;
 
-  
+  constructor(private snackBar: MatSnackBar) {}
+
+
+  openModal(product: any) {
+    this.selectedProduct = product;
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+    this.selectedProduct = null;
+  }
 
   isMobile: boolean = false;
 
@@ -54,9 +68,20 @@ export class HomeComponent {
 
     if (this.selectedCategory === 'all') {
       // Shuffle products when 'all' is selected
-      return this.shuffleArray(filtered);
+      return filtered;
     }
 
     return filtered;
+  }
+
+  reserveProduct() {
+    const product = this.selectedProduct;
+    localStorage.setItem('reservedProduct', JSON.stringify(product));
+    this.snackBar.open(`${this.selectedProduct?.title} reserved, see you at the shop!`, 'Close', {
+      duration: 3000, 
+      verticalPosition: 'top',
+      horizontalPosition: 'right',
+    });
+    this.isModalOpen = false;
   }
 }
